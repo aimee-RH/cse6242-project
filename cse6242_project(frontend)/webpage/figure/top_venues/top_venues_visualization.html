@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bo Dai - Top Venues Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        .chart-container {
+            margin-bottom: 40px;
+        }
+
+        .chart-container h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 500px;
+        }
+
+        .chart-wrapper-small {
+            position: relative;
+            height: 400px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 968px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+        <div class="chart-container">
+            <h3>Top 10 Publication Venues</h3>
+            <div class="chart-wrapper">
+                <canvas id="topVenuesChart"></canvas>
+            </div>
+        </div>
+
+        <div class="two-column">
+            <div class="chart-container">
+                <h3>Conference vs Journal Distribution</h3>
+                <div class="chart-wrapper-small">
+                    <canvas id="confVsJournalChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Top Publication Trends</h3>
+                <div class="chart-wrapper-small">
+                    <canvas id="yearlyTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Load data from JSON
+        const data = {
+            "professor_name": "Bo Dai",
+            "affiliation": "Georgia Institute of Technology",
+            "total_publications": 24,
+            "analysis_date": "2025-11-18",
+            "time_period": "2020-2025",
+            "conference_vs_journal": {
+                "conference": 24,
+                "journal": 0
+            },
+            "top_venues": [
+                {
+                    "venue_name": "NeurIPS (Conference on Neural Information Processing Systems)",
+                    "publication_count": 10,
+                    "venue_type": "conference",
+                    "percentage": 41.7,
+                    "papers_by_year": {"2020": 2, "2023": 3, "2024": 1, "2025": 4}
+                },
+                {
+                    "venue_name": "AISTATS (International Conference on Artificial Intelligence and Statistics)",
+                    "publication_count": 5,
+                    "venue_type": "conference",
+                    "percentage": 20.8,
+                    "papers_by_year": {"2023": 2, "2025": 3}
+                },
+                {
+                    "venue_name": "ICML (International Conference on Machine Learning)",
+                    "publication_count": 4,
+                    "venue_type": "conference",
+                    "percentage": 16.7,
+                    "papers_by_year": {"2023": 1, "2024": 2, "2025": 1}
+                },
+                {
+                    "venue_name": "ICLR (International Conference on Learning Representations)",
+                    "publication_count": 2,
+                    "venue_type": "conference",
+                    "percentage": 8.3,
+                    "papers_by_year": {"2023": 1, "2025": 1}
+                },
+                {
+                    "venue_name": "UAI (Conference on Uncertainty in Artificial Intelligence)",
+                    "publication_count": 1,
+                    "venue_type": "conference",
+                    "percentage": 4.2,
+                    "papers_by_year": {"2022": 1}
+                },
+                {
+                    "venue_name": "EMNLP (Conference on Empirical Methods in Natural Language Processing)",
+                    "publication_count": 1,
+                    "venue_type": "conference",
+                    "percentage": 4.2,
+                    "papers_by_year": {"2021": 1}
+                },
+                {
+                    "venue_name": "IROS (IEEE/RSJ International Conference on Intelligent Robots and Systems)",
+                    "publication_count": 1,
+                    "venue_type": "conference",
+                    "percentage": 4.2,
+                    "papers_by_year": {"2024": 1}
+                }
+            ]
+        };
+
+        // 1. Top Venues Horizontal Bar Chart
+        const venueNames = data.top_venues.map(v => {
+            const shortName = v.venue_name.split('(')[0].trim();
+            return shortName;
+        });
+        const venueCounts = data.top_venues.map(v => v.publication_count);
+        const venueColors = data.top_venues.map(v => {
+            // Color based on whether it's a top conference
+            const topConferences = ['NeurIPS', 'ICML', 'ICLR'];
+            const isTopConf = topConferences.some(conf => v.venue_name.includes(conf));
+            return isTopConf ? '#667eea' : '#764ba2';
+        });
+
+        const ctx1 = document.getElementById('topVenuesChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: venueNames,
+                datasets: [{
+                    label: 'Publication Count',
+                    data: venueCounts,
+                    backgroundColor: venueColors,
+                    borderColor: venueColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const venue = data.top_venues[context.dataIndex];
+                                return [
+                                    `Publications: ${venue.publication_count} papers`,
+                                    `Percentage: ${venue.percentage}%`
+                                ];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        },
+                        title: {
+                            display: true,
+                            text: 'Number of Publications'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Conference Name'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. Conference vs Journal Pie Chart
+        const ctx2 = document.getElementById('confVsJournalChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Conference Papers', 'Journal Papers'],
+                datasets: [{
+                    data: [data.conference_vs_journal.conference, data.conference_vs_journal.journal],
+                    backgroundColor: ['#667eea', '#f687b3'],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const total = data.total_publications;
+                                const value = context.parsed;
+                                const percentage = ((value / total) * 100).toFixed(1);
+                                return `${context.label}: ${value} papers (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 3. Yearly Trend Chart - Top conferences by year
+        const years = ['2020', '2021', '2022', '2023', '2024', '2025'];
+        const neuripsData = years.map(year => {
+            const venue = data.top_venues[0]; // NeurIPS
+            return venue.papers_by_year[year] || 0;
+        });
+        const icmlData = years.map(year => {
+            const venue = data.top_venues[2]; // ICML
+            return venue.papers_by_year[year] || 0;
+        });
+        const iclrData = years.map(year => {
+            const venue = data.top_venues[3]; // ICLR
+            return venue.papers_by_year[year] || 0;
+        });
+
+        const ctx3 = document.getElementById('yearlyTrendChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: years,
+                datasets: [
+                    {
+                        label: 'NeurIPS',
+                        data: neuripsData,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'ICML',
+                        data: icmlData,
+                        borderColor: '#764ba2',
+                        backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'ICLR',
+                        data: iclrData,
+                        borderColor: '#f687b3',
+                        backgroundColor: 'rgba(246, 135, 179, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        },
+                        title: {
+                            display: true,
+                            text: 'Number of Publications'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

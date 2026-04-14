@@ -1,0 +1,36 @@
+from neo4j import GraphDatabase
+from typing import List, Dict, Any
+import os
+
+class Neo4jConnector:
+    """Neo4j database connection manager"""
+
+    def __init__(self):
+        self.uri = "bolt://localhost:7688"
+        self.user = "neo4j"
+        self.password = "academic123"
+        self.driver = None
+
+    def connect(self):
+        """Establish database connection"""
+        if not self.driver:
+            self.driver = GraphDatabase.driver(
+                self.uri,
+                auth=(self.user, self.password)
+            )
+        return self.driver
+
+    def execute_query(self, query: str, params: Dict[str, Any] = None) -> List[Dict]:
+        """Execute Cypher query and return results"""
+        driver = self.connect()
+        with driver.session() as session:
+            result = session.run(query, params or {})
+            return [record.data() for record in result]
+
+    def close(self):
+        """Close connection"""
+        if self.driver:
+            self.driver.close()
+
+# Global singleton
+neo4j_connector = Neo4jConnector()

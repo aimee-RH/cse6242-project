@@ -1,0 +1,4 @@
+开发文档v2
+1. Advisor Research Interest Finder旁边的svg改成webpage/compass-svgrepo-com.svg
+2. Advisor Research Interest Finder改成Scholar Compass: AI-Driven Visual Analytics for Advisor Discovery
+3. 把这次前端用到的技术写在一个新的txt里面，写英文版，这是我们组的技术报告

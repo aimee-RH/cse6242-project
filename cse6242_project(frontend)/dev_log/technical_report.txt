@@ -1,0 +1,221 @@
+TECHNICAL REPORT
+Scholar Compass: AI-Driven Visual Analytics for Advisor Discovery
+================================================================================
+
+PROJECT OVERVIEW
+--------------------------------------------------------------------------------
+Scholar Compass is an interactive web-based application designed to help students
+discover potential academic advisors based on their research interests using
+AI-powered conversational interface.
+
+
+FRONTEND TECHNOLOGIES
+--------------------------------------------------------------------------------
+
+1. HTML5
+   - Modern semantic markup structure
+   - Responsive layout design
+   - Accessibility features with proper ARIA labels
+   - SVG integration for scalable graphics
+
+2. CSS3
+   - Advanced styling with CSS Grid and Flexbox layouts
+   - Gradient backgrounds for visual appeal
+   - CSS animations and transitions for smooth user interactions
+   - Keyframe animations for typing indicators
+   - Responsive design principles with media queries
+   - Custom scrollbar styling
+
+3. Vanilla JavaScript (ES6+)
+   - Asynchronous programming with async/await
+   - Fetch API for RESTful communication with backend
+   - DOM manipulation for dynamic content updates
+   - Event-driven architecture
+   - Real-time message handling and rendering
+   - Conversation history management
+   - Error handling and user feedback mechanisms
+
+
+BACKEND TECHNOLOGIES
+--------------------------------------------------------------------------------
+
+1. Python 3.12
+   - Core programming language for server-side logic
+
+2. Flask 3.0.0
+   - Lightweight web framework for API development
+   - RESTful API endpoint design
+   - Template rendering engine
+   - Static file serving with custom configuration
+
+3. Flask-CORS 4.0.0
+   - Cross-Origin Resource Sharing (CORS) support
+   - Enables secure cross-origin requests
+
+4. OpenAI Python SDK 2.6.1
+   - Integration with Qwen-plus LLM via Alibaba Cloud DashScope
+   - Chat completions API
+   - Message history management
+   - Compatible mode for OpenAI API standard
+
+
+AI/ML INTEGRATION
+--------------------------------------------------------------------------------
+
+1. Qwen-plus Model (Alibaba Cloud)
+   - Large Language Model for natural language understanding
+   - Contextual conversation handling
+   - Research interest analysis and advisor recommendation
+   - Real-time response generation
+
+2. API Configuration
+   - Secure API key management
+   - Base URL configuration for Alibaba DashScope
+   - Chat completion endpoints
+   - System prompt engineering for domain-specific responses
+
+
+USER INTERFACE FEATURES
+--------------------------------------------------------------------------------
+
+1. Interactive Chat Interface
+   - Real-time message exchange
+   - User and AI message differentiation with avatars
+   - Smooth scrolling to latest messages
+   - Typing indicators during AI response generation
+
+2. Visual Design Elements
+   - Purple gradient color scheme for branding
+   - Compass icon representing guidance and discovery
+   - Clean, modern interface design
+   - Shadow effects and rounded corners for depth
+
+3. User Experience (UX)
+   - Welcome message with clear instructions
+   - Input field with Enter key support
+   - Disabled state handling during API calls
+   - Error messages for failed requests
+   - Responsive layout for different screen sizes
+
+
+ARCHITECTURE PATTERNS
+--------------------------------------------------------------------------------
+
+1. Client-Server Architecture
+   - Clear separation between frontend and backend
+   - RESTful API communication
+   - Stateless HTTP requests
+
+2. MVC Pattern (Backend)
+   - Model: AI model integration and data processing
+   - View: Template rendering
+   - Controller: Route handlers and business logic
+
+3. Event-Driven Programming (Frontend)
+   - User interaction events (click, keypress)
+   - Asynchronous API responses
+   - Dynamic DOM updates
+
+
+DEPLOYMENT CONFIGURATION
+--------------------------------------------------------------------------------
+
+1. Development Server
+   - Flask development server with debug mode
+   - Hot reload for rapid development
+   - Multi-host binding (localhost, LAN IP)
+   - Custom port configuration (5001)
+
+2. Static File Handling
+   - Custom static folder configuration
+   - Static URL path mapping
+   - SVG, CSS, and JavaScript asset management
+
+3. API Endpoints
+   - GET /: Main application page
+   - POST /api/chat: Chat message processing endpoint
+
+
+SECURITY CONSIDERATIONS
+--------------------------------------------------------------------------------
+
+1. API Key Management
+   - Secure storage of API credentials
+   - Environment variable support ready
+
+2. CORS Configuration
+   - Controlled cross-origin access
+   - Header management for secure communication
+
+3. Input Validation
+   - Client-side input sanitization
+   - Server-side request validation
+   - Error handling for malformed requests
+
+
+SCALABILITY AND PERFORMANCE
+--------------------------------------------------------------------------------
+
+1. Asynchronous Operations
+   - Non-blocking API calls
+   - Smooth UI updates during processing
+
+2. Efficient Resource Loading
+   - Minimal external dependencies
+   - Optimized static file serving
+   - Lazy loading of conversation history
+
+3. Code Organization
+   - Modular JavaScript functions
+   - Reusable components
+   - Clean separation of concerns
+
+
+FUTURE ENHANCEMENT POSSIBILITIES
+--------------------------------------------------------------------------------
+
+1. Advanced Features
+   - Multi-language support
+   - Conversation export functionality
+   - Advisor filtering and sorting options
+   - Integration with academic databases
+
+2. Performance Optimization
+   - Production WSGI server deployment
+   - CDN integration for static assets
+   - Response caching mechanisms
+
+3. Enhanced AI Capabilities
+   - Fine-tuned models for advisor matching
+   - Citation and reference integration
+   - Personalized recommendations based on user profile
+
+
+DEVELOPMENT TOOLS
+--------------------------------------------------------------------------------
+
+1. Package Management
+   - pip for Python dependency management
+   - requirements.txt for reproducible environments
+
+2. Version Control Ready
+   - Structured project organization
+   - Modular file architecture
+
+3. Browser Compatibility
+   - Modern browser support (Chrome, Firefox, Safari, Edge)
+   - ES6+ JavaScript features
+   - CSS3 advanced properties
+
+
+CONCLUSION
+--------------------------------------------------------------------------------
+Scholar Compass leverages modern web technologies and AI capabilities to create
+an intuitive, responsive, and intelligent advisor discovery platform. The
+combination of clean frontend design, robust backend architecture, and
+state-of-the-art AI integration provides a seamless user experience for
+academic advisor exploration.
+
+
+Project Team: CSE 6242 Group Project
+Date: October 2025

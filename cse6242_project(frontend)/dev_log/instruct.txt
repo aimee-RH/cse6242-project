@@ -1,0 +1,8 @@
+生成一个前端，用于帮助学生查询感兴趣研究兴趣的导师
+1. webpage/api_file.py里面存有，api key和模型
+2. 网站的logo存在webpage/student-svgrepo-com.svg
+3. 英文版网站
+4. 写javascript
+5. 要有一个聊天框
+6. 大模型的logo webpage/student-svgrepo-com.svg
+7. user的logo webpage/user-svgrepo-com.svg

@@ -1,0 +1,40 @@
+# --- Neo4j & Database Ignore Rules ---
+
+# 忽略报错中提到的具体数据目录 (最重要的部分)
+backend/academic_graph_project/neo4j_data/
+
+# 为了保险起见，忽略项目中任何名为 neo4j_data 的文件夹
+**/neo4j_data/
+
+# 忽略 Neo4j 的事务日志和数据库文件
+*.db
+*.log
+neostore*
+
+# --- Data Files ---
+**/*.csv
+**/*.json
+**/*.parquet
+data/
+
+# --- Common Python/OS Ignore Rules ---
+__pycache__/
+*.pyc
+.DS_Store
+.env
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Node.js ---
+node_modules/
+
+# --- Logs ---
+*.log
+
+# --- Jupyter Notebook ---
+.ipynb_checkpoints/
+*.ipynb
