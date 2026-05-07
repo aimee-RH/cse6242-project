@@ -3,8 +3,11 @@ const chatContainer = document.getElementById('chatContainer');
 const messageInput = document.getElementById('messageInput');
 const sendButton = document.getElementById('sendButton');
 
-// Store conversation history
+// Store conversation history (for local fallback)
 let conversationHistory = [];
+
+// Store session ID for multi-turn conversation
+let sessionId = null;
 
 // Add event listeners
 sendButton.addEventListener('click', sendMessage);
@@ -13,6 +16,20 @@ messageInput.addEventListener('keypress', (e) => {
         e.preventDefault();
         sendMessage();
     }
+});
+
+// New Chat button - reset session
+document.getElementById('newChatBtn').addEventListener('click', () => {
+    sessionId = null;
+    conversationHistory = [];
+    chatContainer.innerHTML = `
+        <div class="welcome-message">
+            <h2>Welcome! 👋</h2>
+            <p>I'm here to help you find advisors based on your research interests.</p>
+            <p>Ask me about any research topic or field, and I'll help you discover potential advisors!</p>
+        </div>
+    `;
+    console.log('[Session] New chat started - session reset');
 });
 
 // Send message function
@@ -43,7 +60,7 @@ async function sendMessage() {
     const typingIndicator = showTypingIndicator();
 
     try {
-        // Send request to backend
+        // Send request to backend with session_id
         const response = await fetch('/api/chat', {
             method: 'POST',
             headers: {
@@ -51,7 +68,8 @@ async function sendMessage() {
             },
             body: JSON.stringify({
                 message: message,
-                history: conversationHistory
+                session_id: sessionId,  // CRITICAL: Send session_id to backend
+                history: []  // Let backend fetch history from database
             })
         });
 
@@ -65,12 +83,22 @@ async function sendMessage() {
         typingIndicator.remove();
 
         if (data.success) {
+            // CRITICAL: Save session_id from backend response
+            if (data.session_id) {
+                sessionId = data.session_id;
+                console.log('[Session] Session ID saved:', sessionId.substring(0, 8) + '...');
+            }
+
             // Add assistant message
             addMessage(data.message, 'assistant');
 
             // Add to conversation history
             conversationHistory.push({ role: 'assistant', content: data.message });
 
+            // Optional: Log rewriter info for debugging
+            if (data.rewriter_info) {
+                console.log('[Rewriter]', data.rewriter_info);
+            }
             // Optional: Log tool calls for debugging
             if (data.tool_calls && data.tool_calls.length > 0) {
                 console.log('Agent called tools:', data.tool_calls);

@@ -39,6 +39,7 @@
             padding: 25px 30px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 15px;
         }
 
@@ -50,6 +51,27 @@
         .header h1 {
             font-size: 24px;
             font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .new-chat-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .new-chat-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .chat-container {
@@ -211,8 +233,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="compass-svgrepo-com.svg" alt="Logo">
-            <h1>Scholar Compass</h1>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="compass-svgrepo-com.svg" alt="Logo">
+                <h1>Scholar Compass</h1>
+            </div>
+            <div class="header-right">
+                <button class="new-chat-btn" id="newChatBtn">New Chat</button>
+            </div>
         </div>
 
         <div class="chat-container" id="chatContainer">

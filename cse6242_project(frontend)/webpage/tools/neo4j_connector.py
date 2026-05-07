@@ -34,3 +34,10 @@ class Neo4jConnector:
 
 # Global singleton
 neo4j_connector = Neo4jConnector()
+
+
+def get_neo4j_driver():
+    """
+    获取 Neo4j driver 实例（用于 semantic_search 等需要直接使用 session 的场景）
+    """
+    return neo4j_connector.connect()

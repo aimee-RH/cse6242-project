@@ -1,14 +1,17 @@
-from tools.scholar_search import search_scholars_by_field
-from tools.author_analysis import get_author_details
-from tools.collaboration_analyzer import analyze_collaborations
-from tools.trend_analyzer import find_trending_topics
-from tools.advisor_recommender import recommend_advisors
+"""
+Scholar Compass Tools
 
-# Export all tools
-TOOLS = [
-    search_scholars_by_field,
-    get_author_details,
-    analyze_collaborations,
-    find_trending_topics,
-    recommend_advisors,
-]
+新工具（当前使用）在 tools/_new/ 下：
+  - factual_query.py
+  - semantic_search.py
+  - query_templates.py
+  - analyze_author_trajectory.py
+  - analyze_collaboration.py
+  - compare_scholars.py
+  - recommend_advisors.py
+
+旧工具已标记为 _deprecated_，保留备查但不再调用。
+"""
+
+# 不导出任何内容，各模块直接 from tools._new.xxx import xxx
+# 新工具通过 graph/nodes.py 中的 handler 直接调用
